@@ -1,0 +1,79 @@
+
+:root {
+  --color-primary: #03045E;
+  --color-secondary: #0077B6;
+  --color-tertiary: #00B4D8;
+  --color-quaternary: #90E0EF;
+  --color-quinary: #CAF0F8;
+
+  /* ... */
+}
+@layer components {
+  .prose-custom {
+    @apply prose-h1:text-3xl prose-h1:font-bold prose-h1:mb-6
+           prose-h2:text-2xl prose-h2:font-semibold prose-h2:mb-4
+           prose-p:leading-relaxed prose-p:mb-4
+           prose-ul:list-disc prose-ul:ml-6 prose-ul:mb-4
+           prose-ol:list-decimal prose-ol:ml-6 prose-ol:mb-4
+           prose-li:mb-2;
+  }
+}
+
+/* Custom Scrollbar Styles */
+.modern-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modern-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modern-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.modern-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.8);
+}
+
+/* For Firefox */
+.modern-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .nav-link {
+  @apply text-white px-3 py-2 block relative transition-colors duration-300;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  @apply text-yellow-500;
+}
+
+.nav-link.active::after {
+  content: '';
+  @apply absolute left-0 bottom-0 w-full h-0.5 bg-yellow-500;
+  animation: border-animation 0.3s ease;
+}
+
+@keyframes border-animation {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-link {
+    @apply border-b border-gray-700;
+  }
+} */

@@ -1,0 +1,67 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read/write access to all courses for now during initialization
+    match /courses/{courseId} {
+      allow read, write: if true;
+    }
+    
+    // Allow read/write access to all lessons during initialization
+    match /lessons/{lessonId} {
+      allow read, write: if true;
+    }
+    
+    // Allow read/write access to enrollments
+    match /enrollments/{enrollmentId} {
+      allow read, write: if true;
+    }
+  }
+}
+
+
+
+
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isUserEnrolled(courseId) {
+      let enrollmentQuery = /databases/$(database)/documents/enrollments;
+      let userEnrollments = enrollmentQuery.where('userId', '==', request.auth.uid)
+                                         .where('courseId', '==', courseId).limit(1);
+      return userEnrollments.get().size() > 0;
+    }
+
+    // Courses collection
+    match /courses/{courseId} {
+      allow read: if isAuthenticated();
+    }
+
+    // Lessons collection
+    match /lessons/{lessonId} {
+      allow read: if isAuthenticated();
+    }
+
+    // Enrollments collection
+    match /enrollments/{enrollmentId} {
+      // Allow read/write only for user's own enrollments
+      allow read: if isAuthenticated() && 
+                 resource.data.userId == request.auth.uid;
+      
+      allow write: if isAuthenticated() && 
+                  request.resource.data.userId == request.auth.uid;
+                  
+      allow update: if isAuthenticated() && 
+                   resource.data.userId == request.auth.uid;
+    }
+  }
+}
+
+
+
+password:GHJKLKJrtyuik3456789$%^&*
