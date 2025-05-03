@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import emailjs from '@emailjs/browser';
+import { Mail, Phone } from 'lucide-react';
+import whatsapp from '../assets/images/whatsapp.png'
 
 function Contact() {
     const [formData, setFormData] = useState({
@@ -88,25 +90,48 @@ function Contact() {
                         <h1 id="contact-heading" className="text-5xl text-primary font-bold mb-6">
                             Contact Us Today
                         </h1>
-                        <div className="space-y-4">
-                            <h2 className="text-2xl font-semibold">Get in Touch</h2>
-                            <p className="text-gray-600 text-xl">Reach Out for a Consultation</p>
-                            <address className="space-y-2 not-italic">
+                        <div className="space-y-8">
+                            
+                            <h2 className="text-3xl font-semibold">Get in Touch With Us on :</h2>
+                            <address className="space-y-8 not-italic">
                                 <div>
-                                    <h3 className="block text-primary text-xl">Email:</h3>
+                                    <span className='flex items-center gap-2'>
+                                    <Mail className="w-6 h-6 text-secondary" aria-hidden="true" />
+                                    
+                                    <h3 className="block text-primary font-bold text-2xl">Email:</h3>
+                                    </span>
+                                
                                     <a 
                                         href="mailto:alphatech1798@gmail.com"
-                                        className="text-primary hover:text-secondary hover:underline"
+                                        className="text-primary font-semibold text-xl hover:text-secondary hover:underline"
                                         aria-label="Send us an email"
                                     >
-                                        alphatech1798@gmail.com
+                                        sparktech1798@gmail.com
                                     </a>
                                 </div>
                                 <div>
-                                    <h3 className="block text-primary text-xl">Phone:</h3>
+                                <span className='flex items-center gap-2'>
+                                    <Phone className="w-6 h-6 text-blue-600" aria-hidden="true" />
+                                    
+                                    <h3 className="block text-primary font-bold text-2xl">Phone:</h3>
+                                    </span>
+                                    
                                     <a 
                                         href="tel:+254796591251"
-                                        className="text-primary hover:text-secondary"
+                                        className="text-primary font-semibold text-xl hover:text-secondary"
+                                        aria-label="Call us"
+                                    >
+                                        +254 796591251
+                                    </a>
+                                </div>
+                                <div>
+                                <span className='flex items-center gap-2'>
+                                    <img src={whatsapp} alt="WhatsApp" className="w-6 h-6 text-green-600" aria-hidden="true" />
+                                    <h3 className="block text-green-500 font-bold text-2xl">WhatsApp :</h3>
+                                </span>
+                                    <a 
+                                        href="https://wa.me/254796591251"
+                                        className="text-primary font-semibold text-xl hover:text-secondary"
                                         aria-label="Call us"
                                     >
                                         +254 796591251

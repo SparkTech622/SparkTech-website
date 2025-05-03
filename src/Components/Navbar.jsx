@@ -1,11 +1,33 @@
-import { Menu, X } from 'lucide-react'
-import { useState } from 'react'
+import { Menu, User, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/images/logo2.png';
+import { useAuth } from '../Context/AuthProvider';
 
 function Navbar() {
+    const [scrolled, setScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
+    const { user } = useAuth();
+   
+
+
+   // Log the authentication status
+   
+
+    useEffect(() => {
+        const handleScroll = () => {
+          const offset = window.scrollY;
+          if (offset > 10) {
+            setScrolled(true);
+          } else {
+            setScrolled(false);
+          }
+        };
+    
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+      }, []);
 
     const navItems = [
          "Dashboard",
@@ -25,27 +47,34 @@ function Navbar() {
     };
 
     return (
-        <header className="sticky top-0 z-50 bg-white shadow-lg">
+        <header
+      className={(
+        "fixed top-0 left-0 w-full z-50 transition-all duration-300",
+        scrolled
+          ? "bg-white/80  backdrop-blur-lg shadow-sm py-3"
+          : "bg-white "
+      )}
+    >
             <nav className="max-w-7xl mx-auto" role="navigation" aria-label="Main navigation">
-                <div className="flex flex-col items-center justify-between p-4">
+                <div className=" flex  items-center justify-between p-4">
                     {/* Logo Section */}
-                    <Link to="/" className="flex items-center space-x-2 mb-4 md:mb-2" aria-label="Spark Tech Home">
-                        <div className="" aria-hidden="true">
+                    <Link to="/" className=" px-2 flex items-center " aria-label="Spark Tech Home">
+                        <div className="flex items-center " aria-hidden="true">
                         <img src={logo}
                         alt="ST" 
-                        className='h-10 w-10'
+                        className='h-12 w-12'
                         />
                         </div>
-                        <div>
+                        <span>
                             <div className="text-xl font-bold text-secondary">
                             SPARK<span className='text-primary'>TECH</span>
                             </div>
-                            <div className="text-lg text-primary">Solutions</div>
-                        </div>
+                            <div className="text-xl text-primary">Solutions</div>
+                        </span>
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden md:flex items-center space-x-6">
+                    <nav className="hidden md:flex items-center gap-1">
                         <Link
                             to="/"
                             className={`relative px-4 py-2 text-gray-600 transition-colors duration-300
@@ -75,11 +104,24 @@ function Navbar() {
                                 </span>
                             </Link>
                         ))}
-                    </div>
+                    </nav>
 
                     {/* Mobile Menu Button */}
+
+                    <div className="flex items-center gap-4">
+          <button className="mr-4 flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors dark:bg-slate-800 dark:hover:bg-slate-700">
+           <Link to="/dashboard" className="flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors dark:bg-slate-800 dark:hover:bg-slate-700">
+           {user ? (
+        <span className="text-white font-semibold text-sm">
+          {user.displayName?.slice(0, 2).toUpperCase() || 'U'}
+        </span>
+      ) : (
+        <User size={18} className="text-white" />
+      )}
+          </Link>
+          </button>
                     <button 
-                        className="md:hidden absolute left-4 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                        className="md:hidden flex items-center justify-center"
                         onClick={() => setIsOpen(!isOpen)}
                         aria-expanded={isOpen}
                         aria-label="Toggle navigation menu"
@@ -90,6 +132,7 @@ function Navbar() {
                             <Menu className="h-6 w-6 text-gray-600" aria-hidden="true" />
                         )}
                     </button>
+                    </div>
                 </div>
 
                 {/* Mobile Navigation */}

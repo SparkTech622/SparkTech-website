@@ -91,7 +91,7 @@ const Footer = () => {
                 <Mail className="w-5 h-5" aria-hidden="true" />
                 <a href="mailto:alphatech1798@gmail.com" 
                    className="hover:text-quinary hover:underline transition-colors">
-                  alphatech1798@gmail.com
+                  sparktech1798@gmail.com
                 </a>
               </div>
               <div className="flex items-center space-x-2">
